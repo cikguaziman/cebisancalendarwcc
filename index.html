@@ -141,15 +141,15 @@
         <span class="font-medium text-stone-700">Tersedia (Boleh Tempah)</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-maroon-800 shadow-sm"></span>
-        <span class="font-medium text-stone-700">Penuh / Ditempah</span>
+        <span class="w-3.5 h-3.5 rounded-md bg-maroon-800 shadow-sm border border-maroon-900"></span>
+        <span class="font-semibold text-maroon-900">Penuh / Ditempah (Merah)</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-amber-500 shadow-sm"></span>
+        <span class="w-3.5 h-3.5 rounded-md bg-amber-400 shadow-sm"></span>
         <span class="font-medium text-stone-700">Slot Pagi / Malam Sahaja</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-stone-400 shadow-sm"></span>
+        <span class="w-3.5 h-3.5 rounded-md bg-stone-300 shadow-sm"></span>
         <span class="font-medium text-stone-700">Majlis Selesai</span>
       </div>
     </div>
@@ -190,7 +190,7 @@
         <div class="text-maroon-900">Sabtu</div>
       </div>
 
-      <!-- Grid Hari -->
+      <!-- Grid Hari Kalendar -->
       <div id="calendarGrid" class="grid grid-cols-7 gap-px bg-stone-200">
         <!-- Render melalui JavaScript -->
       </div>
@@ -265,7 +265,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- 1. MODAL PIN LOGIN ADMIN (HINT DIPADAMKAN) -->
+  <!-- 1. MODAL PIN LOGIN ADMIN (PIN: 030701, TANPA HINT) -->
   <div id="pinModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
@@ -484,6 +484,7 @@
       }
     }
 
+    // ---------- KALENDAR (KOTAK MERAH MENYALAH BILA PENUH) ----------
     function renderCalendar() {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
@@ -511,15 +512,15 @@
         const booking = bookings[dateStr];
         const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
 
-        const cell = document.createElement("div");
-        cell.className = `min-h-[90px] sm:min-h-[110px] p-1.5 sm:p-2.5 transition relative cursor-pointer group flex flex-col justify-between ${
-          isToday ? "bg-maroon-50/50 border-2 border-maroon-700" : "bg-white hover:bg-stone-50"
-        }`;
-        cell.onclick = () => handleDateClick(dateStr);
-
+        // Tentukan gaya kotak & teks mengikut status ketersediaan
+        let cellClass = "bg-white hover:bg-stone-50 text-stone-800";
+        let dayNumClass = isToday ? "text-maroon-900 font-extrabold" : "text-stone-800 font-bold";
         let statusBadgeHtml = "";
+        let adminInfoHtml = "";
 
         if (!booking) {
+          // TERSEDIA (KOTAK PUTIH, BADGE HIJAU)
+          cellClass = "bg-white hover:bg-emerald-50/30 text-stone-800";
           statusBadgeHtml = `
             <div class="mt-1">
               <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-100 text-emerald-800">
@@ -530,57 +531,80 @@
             </div>
           `;
         } else if (booking.status === "completed") {
+          // SELESAI
+          cellClass = "bg-stone-100/80 hover:bg-stone-200/60 text-stone-500";
+          dayNumClass = "text-stone-500 font-bold";
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-stone-100 text-stone-600">
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-stone-200 text-stone-700">
                 <i class="fa-solid fa-check text-[9px] mr-1"></i>
                 <span class="truncate">Selesai</span>
               </span>
             </div>
           `;
         } else if (booking.slot === "full") {
+          // 🔥 PENUH / BOOKED: SELURUH KOTAK BERWARNA MAROON/MERAH PEKAT 🔥
+          cellClass = "bg-maroon-800 hover:bg-maroon-900 text-white shadow-sm border border-maroon-900";
+          dayNumClass = "text-white font-extrabold text-sm sm:text-base";
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-maroon-100 text-maroon-900 border border-maroon-200">
-                <span class="w-1.5 h-1.5 rounded-full bg-maroon-800 mr-1"></span>
-                <span class="truncate">Penuh</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold bg-white text-maroon-900 shadow">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-600 mr-1 animate-pulse"></span>
+                <span class="tracking-wide">PENUH</span>
               </span>
             </div>
           `;
         } else if (booking.slot === "morning") {
+          // SLOT PAGI SAHAJA
+          cellClass = "bg-amber-50 hover:bg-amber-100/70 border border-amber-200 text-stone-800";
+          dayNumClass = "text-amber-950 font-bold";
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-950 leading-tight">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1 shrink-0"></span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-200 text-amber-950 leading-tight">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-600 mr-1 shrink-0"></span>
                 <span class="truncate">Malam Kosong</span>
               </span>
             </div>
           `;
         } else if (booking.slot === "evening") {
+          // SLOT MALAM SAHAJA
+          cellClass = "bg-amber-50 hover:bg-amber-100/70 border border-amber-200 text-stone-800";
+          dayNumClass = "text-amber-950 font-bold";
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-950 leading-tight">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1 shrink-0"></span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-200 text-amber-950 leading-tight">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-600 mr-1 shrink-0"></span>
                 <span class="truncate">Pagi Kosong</span>
               </span>
             </div>
           `;
         }
 
-        let adminInfoHtml = "";
+        // Tanda khas jika hari ini
+        if (isToday) {
+          cellClass += " ring-2 ring-amber-400 ring-offset-1";
+        }
+
+        // Nama pengantin untuk admin
         if (booking && isAdminMode) {
+          const textColor = (booking.slot === "full") ? "text-rose-100" : "text-maroon-900";
+          const iconColor = (booking.slot === "full") ? "text-rose-200" : "text-maroon-700";
           adminInfoHtml = `
-            <div class="mt-auto pt-1 text-[10px] text-maroon-900 font-semibold truncate">
-              <i class="fa-solid fa-user text-maroon-700 text-[8px] mr-0.5"></i> ${escapeHtml(booking.customerName)}
+            <div class="mt-auto pt-1 text-[10px] ${textColor} font-semibold truncate">
+              <i class="fa-solid fa-user ${iconColor} text-[8px] mr-0.5"></i> ${escapeHtml(booking.customerName)}
             </div>
           `;
         }
 
+        const cell = document.createElement("div");
+        cell.className = `min-h-[90px] sm:min-h-[110px] p-1.5 sm:p-2.5 transition relative cursor-pointer group flex flex-col justify-between ${cellClass}`;
+        cell.onclick = () => handleDateClick(dateStr);
+
         cell.innerHTML = `
           <div>
             <div class="flex items-center justify-between">
-              <span class="text-xs sm:text-sm font-bold ${isToday ? 'text-maroon-900' : 'text-stone-800'}">${day}</span>
-              ${isAdminMode && booking ? '<i class="fa-solid fa-pen-to-square text-[10px] text-stone-400 group-hover:text-maroon-800"></i>' : ''}
+              <span class="text-xs sm:text-sm ${dayNumClass}">${day}</span>
+              ${isAdminMode && booking ? `<i class="fa-solid fa-pen-to-square text-[10px] ${booking.slot === 'full' ? 'text-rose-200 hover:text-white' : 'text-stone-400 hover:text-maroon-800'}"></i>` : ''}
             </div>
             ${statusBadgeHtml}
           </div>
