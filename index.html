@@ -7,14 +7,13 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Supabase JS Library (Cloud Database) -->
+  <!-- Supabase Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -24,16 +23,6 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             serif: ['"Playfair Display"', 'serif'],
-          },
-          colors: {
-            brand: {
-              50: '#fdf8f6',
-              100: '#f2e8e5',
-              500: '#b8860b',
-              600: '#996515',
-              700: '#7a5112',
-              900: '#1c1917',
-            }
           }
         }
       }
@@ -44,7 +33,6 @@
     body {
       background-color: #faf9f6;
       color: #1f2937;
-      font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -54,43 +42,12 @@
       background: #e2e8f0;
       border-radius: 9999px;
     }
-    .modal-backdrop {
-      background-color: rgba(17, 24, 39, 0.65);
-      backdrop-filter: blur(4px);
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-amber-100 selection:text-amber-900">
 
-  <!-- ================= TOP DOWNLOAD BAR (ONE-CLICK DOWNLOAD) ================= -->
-  <div class="bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 text-white shadow-lg border-b border-emerald-500/30 p-3 sm:p-4 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center space-x-3 text-center sm:text-left">
-        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
-          <i class="fa-solid fa-file-code text-emerald-300 text-xl"></i>
-        </div>
-        <div>
-          <div class="flex items-center justify-center sm:justify-start gap-2">
-            <span class="text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
-              <i class="fa-solid fa-cloud-check mr-1 text-emerald-300"></i> Supabase Siap Bersambung
-            </span>
-          </div>
-          <p class="text-xs sm:text-sm font-medium text-emerald-100 mt-0.5">
-            Fail HTML ini lengkap dan sedia untuk terus di-upload ke GitHub & Vercel.
-          </p>
-        </div>
-      </div>
-
-      <!-- BUTANG DOWNLOAD BESAR HIJAU TERANG -->
-      <button onclick="downloadIndexHtmlFile()" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 bg-emerald-400 hover:bg-emerald-300 active:scale-95 text-stone-900 font-extrabold px-5 py-3 rounded-xl shadow-xl hover:shadow-emerald-400/40 transition-all text-xs sm:text-sm shrink-0 border border-emerald-200 cursor-pointer">
-        <i class="fa-solid fa-circle-down text-lg animate-bounce"></i>
-        <span>📥 KLIK DI SINI UNTUK MUAT TURUN FAIL (index.html)</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- ================= HEADER NAVIGATION ================= -->
-  <header class="bg-white/90 backdrop-blur-md border-b border-stone-200 z-40">
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
       
       <!-- Logo / Title -->
@@ -100,9 +57,9 @@
         </div>
         <div>
           <h1 class="font-serif text-lg sm:text-xl font-bold tracking-tight text-stone-900 leading-tight">
-            The Wedding Visuals
+            Wedding Date Checker
           </h1>
-          <p class="text-xs text-stone-500 font-medium">Semakan Slot Tarikh & Tempahan Rasmi</p>
+          <p class="text-xs text-stone-500 font-medium">Semakan Slot & Tempahan Rasmi</p>
         </div>
       </div>
 
@@ -113,7 +70,7 @@
           Mod Pelanggan
         </span>
 
-        <button id="toggleModeBtn" onclick="handleModeSwitch()" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all border shadow-sm bg-white text-stone-700 border-stone-300 hover:bg-stone-50 cursor-pointer">
+        <button id="toggleModeBtn" onclick="handleModeSwitch()" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all border shadow-sm bg-white text-stone-700 border-stone-300 hover:bg-stone-50">
           <i class="fa-solid fa-lock text-stone-400"></i>
           <span id="toggleModeBtnText">Masuk Admin</span>
         </button>
@@ -122,31 +79,28 @@
     </div>
   </header>
 
-  <!-- ================= MAIN CONTAINER ================= -->
+  <!-- ================= MAIN CONTENT ================= -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
 
-    <!-- ADMIN BANNER (Hanya kelihatan bila Login Admin) -->
+    <!-- ADMIN BANNER (Hanya muncul jika sudah login Admin) -->
     <div id="adminNoticeBar" class="hidden bg-gradient-to-r from-stone-900 via-stone-800 to-amber-950 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
         <div class="p-2.5 bg-amber-500/20 text-amber-400 rounded-xl">
           <i class="fa-solid fa-user-shield text-xl"></i>
         </div>
         <div>
-          <h2 class="font-bold text-sm sm:text-base text-amber-200">Portal Pengurusan Admin (Supabase Cloud Connected)</h2>
-          <p class="text-xs text-stone-300">Klik mana-mana tarikh di kalendar untuk tambah maklumat, padam (buka semula tarikh), atau tandakan selesai.</p>
+          <h2 class="font-bold text-sm sm:text-base text-amber-200">Portal Pengurusan Admin Aktif</h2>
+          <p class="text-xs text-stone-300">Klik mana-mana tarikh di kalendar untuk tambah, kemaskini, padam, atau tandakan majlis selesai.</p>
         </div>
       </div>
       <div class="flex items-center space-x-2 w-full sm:w-auto">
-        <button onclick="scrollToSection('adminTableSection')" class="flex-1 sm:flex-none text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-medium transition cursor-pointer">
+        <button onclick="scrollToSection('adminTableSection')" class="flex-1 sm:flex-none text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-medium transition">
           <i class="fa-solid fa-list-check mr-1.5"></i> Urus Jadual (<span id="totalBookingsCount">0</span>)
-        </button>
-        <button onclick="openSettingsModal()" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 px-3 py-2 rounded-lg font-medium transition border border-amber-500/30 cursor-pointer">
-          <i class="fa-solid fa-gear mr-1"></i> No. WhatsApp
         </button>
       </div>
     </div>
 
-    <!-- CUSTOMER WELCOME BANNER (Mod Pelanggan) -->
+    <!-- CUSTOMER WELCOME BANNER -->
     <div id="customerBanner" class="text-center max-w-2xl mx-auto space-y-2">
       <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full uppercase tracking-wider">
         Kalendar Ketersediaan Slot
@@ -155,11 +109,11 @@
         Rancang Hari Bahagia Anda Bersama Kami
       </h2>
       <p class="text-stone-600 text-sm sm:text-base">
-        Sila semak tarikh pilihan anda di bawah. Klik pada tarikh bertanda hijau untuk terus lock slot atau bertanya pakej rasmi melalui WhatsApp.
+        Sila semak tarikh majlis anda di bawah. Klik pada tarikh bertanda hijau untuk terus berhubung atau lock tarikh melalui WhatsApp.
       </p>
     </div>
 
-    <!-- PETUNJUK STATUS (LEGEND) -->
+    <!-- PETUNJUK STATUS -->
     <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-stone-200 shadow-sm flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm">
       <div class="flex items-center space-x-2">
         <span class="w-3.5 h-3.5 rounded-md bg-emerald-500 shadow-sm"></span>
@@ -179,35 +133,32 @@
       </div>
     </div>
 
-    <!-- ================= KALENDAR CONTAINER ================= -->
+    <!-- ================= KALENDAR ================= -->
     <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
       
-      <!-- Calendar Header (Month Switcher) -->
+      <!-- Calendar Header -->
       <div class="p-4 sm:p-6 bg-stone-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h3 id="currentMonthYearText" class="font-serif text-xl sm:text-2xl font-bold text-amber-200 tracking-wide">
             Bulan & Tahun
           </h3>
-          <p id="cloudSyncIndicator" class="text-xs text-stone-400 flex items-center gap-1.5 mt-0.5">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Disambung ke Supabase Cloud
-          </p>
+          <p class="text-xs text-stone-400">Pilih tarikh untuk melihat status ketersediaan</p>
         </div>
 
         <div class="flex items-center space-x-2">
-          <button onclick="changeMonth(-1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition cursor-pointer" title="Bulan Sebelumnya">
+          <button onclick="changeMonth(-1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <button onclick="goToCurrentMonth()" class="px-3.5 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-semibold text-amber-300 transition cursor-pointer">
+          <button onclick="goToCurrentMonth()" class="px-3.5 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-semibold text-amber-300 transition">
             Hari Ini
           </button>
-          <button onclick="changeMonth(1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition cursor-pointer" title="Bulan Seterusnya">
+          <button onclick="changeMonth(1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
       </div>
 
-      <!-- Days of Week Header -->
+      <!-- Days Header -->
       <div class="grid grid-cols-7 border-b border-stone-200 bg-stone-50 text-center text-xs font-bold text-stone-600 py-3">
         <div class="text-rose-600">Ahad</div>
         <div>Isnin</div>
@@ -218,9 +169,9 @@
         <div class="text-amber-700">Sabtu</div>
       </div>
 
-      <!-- Calendar Days Grid -->
+      <!-- Grid Hari -->
       <div id="calendarGrid" class="grid grid-cols-7 gap-px bg-stone-200">
-        <!-- Hari dimasukkan dinamik oleh JavaScript -->
+        <!-- Render melalui JavaScript -->
       </div>
     </div>
 
@@ -228,8 +179,8 @@
     <section id="adminTableSection" class="hidden space-y-4 pt-4 border-t border-stone-200">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h3 class="font-serif text-xl font-bold text-stone-900">Senarai & Rekod Tempahan Pasangan</h3>
-          <p class="text-xs text-stone-500">Kemas kini status, padam tarikh tersilap tanda, atau tandakan majlis selesai.</p>
+          <h3 class="font-serif text-xl font-bold text-stone-900">Senarai & Rekod Tempahan</h3>
+          <p class="text-xs text-stone-500">Urus tempahan pelanggan, padam tarikh yang tersilap, atau tandakan siap.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -239,14 +190,13 @@
           </div>
 
           <div class="inline-flex rounded-lg border border-stone-200 bg-stone-100 p-0.5 text-xs">
-            <button onclick="setFilterStatus('all')" id="filterBtn-all" class="px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm cursor-pointer">Semua</button>
-            <button onclick="setFilterStatus('upcoming')" id="filterBtn-upcoming" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900 cursor-pointer">Akan Datang</button>
-            <button onclick="setFilterStatus('completed')" id="filterBtn-completed" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900 cursor-pointer">Selesai</button>
+            <button onclick="setFilterStatus('all')" id="filterBtn-all" class="px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm">Semua</button>
+            <button onclick="setFilterStatus('upcoming')" id="filterBtn-upcoming" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900">Akan Datang</button>
+            <button onclick="setFilterStatus('completed')" id="filterBtn-completed" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900">Selesai</button>
           </div>
         </div>
       </div>
 
-      <!-- Table Container -->
       <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
         <div class="overflow-x-auto custom-scrollbar">
           <table class="w-full text-left text-xs sm:text-sm">
@@ -266,7 +216,7 @@
         </div>
         <div id="emptyTableNotice" class="hidden p-8 text-center text-stone-400 text-xs sm:text-sm">
           <i class="fa-regular fa-folder-open text-3xl mb-2 text-stone-300 block"></i>
-          Tiada rekod tempahan ditemui mengikut tapisan semasa.
+          Tiada rekod tempahan ditemui.
         </div>
       </div>
     </section>
@@ -275,50 +225,48 @@
 
   <!-- ================= FOOTER ================= -->
   <footer class="bg-white border-t border-stone-200 py-6 mt-12 text-center text-xs text-stone-500">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p>© 2026 The Wedding Visuals. Sistem Pengurusan Kalendar & Slot Perkahwinan.</p>
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 Wedding Date Management System. Sistem Pengurusan Kalendar Sistematik.</p>
       <div class="flex items-center space-x-3 text-stone-400">
-        <button onclick="openSettingsModal()" class="hover:text-stone-800 transition cursor-pointer">
-          <i class="fa-solid fa-gear mr-1"></i> No. WhatsApp Anda
-        </button>
+        <button onclick="openSettingsModal()" class="hover:text-stone-800 transition"><i class="fa-solid fa-gear mr-1"></i> No. WhatsApp Anda</button>
       </div>
     </div>
   </footer>
 
-  <!-- ================= MODALS & POPUPS ================= -->
+  <!-- ================= MODALS ================= -->
 
-  <!-- 1. MODAL PIN LOGIN ADMIN -->
-  <div id="pinModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+  <!-- 1. MODAL PIN LOGIN -->
+  <div id="pinModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
         <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
           <i class="fa-solid fa-key"></i>
         </div>
         <h3 class="font-serif text-lg font-bold text-stone-900">Akses Portal Admin</h3>
-        <p class="text-xs text-stone-500">Masukkan PIN keselamatan anda (Lalai: <b class="text-amber-700">1234</b>)</p>
+        <p class="text-xs text-stone-500">Masukkan PIN keselamatan (Lalai: <b class="text-amber-700">1234</b>)</p>
       </div>
       
       <div class="space-y-3">
-        <input type="password" id="adminPinInput" maxlength="8" placeholder="Masukkan PIN" class="w-full text-center tracking-widest text-lg font-bold py-2.5 px-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" onkeyup="if(event.key==='Enter') verifyPin()" />
+        <input type="password" id="adminPinInput" maxlength="8" placeholder="Masukkan PIN" class="w-full text-center tracking-widest text-lg font-bold py-2.5 px-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" />
         <p id="pinErrorMsg" class="hidden text-xs text-rose-600 text-center font-medium">PIN tidak sah! Sila cuba lagi.</p>
         
         <div class="grid grid-cols-2 gap-2 pt-1">
-          <button onclick="closePinModal()" class="py-2 px-3 rounded-lg border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-50 cursor-pointer">Batal</button>
-          <button onclick="verifyPin()" class="py-2 px-3 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 cursor-pointer">Sahkan</button>
+          <button onclick="closePinModal()" class="py-2 px-3 rounded-lg border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-50">Batal</button>
+          <button onclick="verifyPin()" class="py-2 px-3 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800">Sahkan</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. MODAL MAKLUMAT PELANGGAN (CUSTOMER VIEW) -->
-  <div id="customerDateModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+  <!-- 2. MODAL MAKLUMAT PELANGGAN -->
+  <div id="customerDateModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="flex items-start justify-between">
         <div>
           <span id="custModalBadge" class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold mb-1">Status</span>
           <h3 id="custModalDateTitle" class="font-serif text-xl font-bold text-stone-900">Tarikh Pilihan</h3>
         </div>
-        <button onclick="closeCustomerModal()" class="text-stone-400 hover:text-stone-700 p-1 cursor-pointer">
+        <button onclick="closeCustomerModal()" class="text-stone-400 hover:text-stone-700 p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -328,8 +276,8 @@
     </div>
   </div>
 
-  <!-- 3. MODAL URUS TEMPAHAN ADMIN (ADD / EDIT / COMPLETE / DELETE) -->
-  <div id="adminBookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+  <!-- 3. MODAL URUS TEMPAHAN ADMIN -->
+  <div id="adminBookingModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
       
       <div class="flex items-start justify-between pb-3 border-b border-stone-100">
@@ -337,7 +285,7 @@
           <span class="text-xs uppercase tracking-wider text-amber-700 font-bold">Urus Slot Kalendar</span>
           <h3 id="adminModalDateHeader" class="font-serif text-xl font-bold text-stone-900">Tarikh</h3>
         </div>
-        <button onclick="closeAdminModal()" class="text-stone-400 hover:text-stone-700 p-1 cursor-pointer">
+        <button onclick="closeAdminModal()" class="text-stone-400 hover:text-stone-700 p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -394,7 +342,7 @@
         <!-- ACTION BUTTONS: SIMPAN / SELESAI / PADAM -->
         <div class="pt-3 border-t border-stone-200 flex flex-col gap-2">
           
-          <button type="submit" id="btnSaveBooking" class="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2 cursor-pointer">
+          <button type="submit" id="btnSaveBooking" class="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2">
             <i class="fa-solid fa-floppy-disk"></i>
             <span>Simpan Maklumat Tempahan</span>
           </button>
@@ -402,20 +350,20 @@
           <!-- Group butang khas jika tarikh sudah bertanda -->
           <div id="adminExistingActionGroup" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
             
-            <button type="button" onclick="toggleCurrentBookingCompleted()" id="btnToggleCompleted" class="w-full py-2 px-3 rounded-lg border border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer">
+            <button type="button" onclick="toggleCurrentBookingCompleted()" id="btnToggleCompleted" class="w-full py-2 px-3 rounded-lg border border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-circle-check"></i>
               <span id="btnToggleCompletedText">Tandakan Selesai</span>
             </button>
 
             <!-- BUTANG PADAM / RESET TARIKH -->
-            <button type="button" onclick="confirmDeleteCurrentBooking()" class="w-full py-2 px-3 rounded-lg border border-rose-300 text-rose-700 bg-rose-50 hover:bg-rose-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer">
+            <button type="button" onclick="deleteCurrentBooking()" class="w-full py-2 px-3 rounded-lg border border-rose-300 text-rose-700 bg-rose-50 hover:bg-rose-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-trash-can"></i>
-              <span>Padam / Buka Semula Tarikh</span>
+              <span>Padam / Kosongkan Tarikh</span>
             </button>
 
           </div>
 
-          <button type="button" onclick="closeAdminModal()" class="w-full py-2 text-stone-500 hover:text-stone-800 text-xs font-medium cursor-pointer">
+          <button type="button" onclick="closeAdminModal()" class="w-full py-2 text-stone-500 hover:text-stone-800 text-xs font-medium">
             Tutup
           </button>
         </div>
@@ -424,7 +372,7 @@
   </div>
 
   <!-- 4. MODAL SETTINGS WHATSAPP -->
-  <div id="settingsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+  <div id="settingsModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
         <h3 class="font-serif text-lg font-bold text-stone-900">Tetapan Nombor WhatsApp</h3>
@@ -437,34 +385,14 @@
           <input type="text" id="vendorPhoneInput" placeholder="Cth: 60123456789" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500" />
         </div>
         <div class="grid grid-cols-2 gap-2 pt-2">
-          <button onclick="closeSettingsModal()" class="py-2 rounded-lg border border-stone-300 text-stone-600 font-medium cursor-pointer">Batal</button>
-          <button onclick="saveVendorPhone()" class="py-2 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-700 cursor-pointer">Simpan</button>
+          <button onclick="closeSettingsModal()" class="py-2 rounded-lg border border-stone-300 text-stone-600 font-medium">Batal</button>
+          <button onclick="saveVendorPhone()" class="py-2 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-700">Simpan</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 5. CUSTOM CONFIRM MODAL (NO ALERT/CONFIRM) -->
-  <div id="confirmDialogModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-stone-200 text-center space-y-3">
-      <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center text-xl">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-      </div>
-      <h3 id="confirmDialogTitle" class="text-base font-serif font-bold text-stone-900">Sahkan Tindakan</h3>
-      <p id="confirmDialogText" class="text-xs text-stone-500 leading-relaxed">Adakah anda pasti?</p>
-      
-      <div class="grid grid-cols-2 gap-2 pt-2">
-        <button id="confirmCancelBtn" class="py-2 px-3 rounded-lg border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-50 cursor-pointer">
-          Batal
-        </button>
-        <button id="confirmOkBtn" class="py-2 px-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold transition cursor-pointer">
-          Ya, Teruskan
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. TOAST NOTIFICATION -->
+  <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
     <div id="toastBox" class="bg-stone-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-xs sm:text-sm border border-stone-700">
       <span id="toastIcon"><i class="fa-solid fa-check text-emerald-400"></i></span>
@@ -472,19 +400,16 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT & SUPABASE ENGINE ================= -->
+  <!-- ================= LOGIK JAVASCRIPT & SUPABASE ================= -->
   <script>
-    // MAKLUMAT SUPABASE ANDA YANG TELAH SIAP DISAMBUNG:
     const SUPABASE_URL = "https://bhzzpatibkwpblucjqxg.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoenpwYXRpYmt3cGJsdWNqcXhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0MTA3MjgsImV4cCI6MjEwNzk4NjcyOH0.KpPGtnFgqDMkJLr7uJHY1lfrE2oVR6y5eLYOL1d67-s";
 
     const DEFAULT_PIN = "1234";
-    const STORAGE_KEY_SETTINGS = "wedding_vendor_settings_v3";
+    const STORAGE_KEY_SETTINGS = "wedding_vendor_settings_v2";
 
-    // Inisialisasi Sambungan Supabase (Gunakan nama pembolehubah berbeza untuk elak konflik nama dengan library CDN)
-    const supabaseClient = (window.supabase && typeof window.supabase.createClient === "function")
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-      : null;
+    // Inisialisasi Supabase Client
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let currentDate = new Date();
     let isAdminMode = false;
@@ -504,47 +429,12 @@
       await fetchBookingsFromSupabase();
     });
 
-    // =========================================================
-    // 📥 FUNGSI MUAT TURUN FAIL (DOWNLOAD index.html)
-    // =========================================================
-    function downloadIndexHtmlFile() {
-      try {
-        const fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-        const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
-        const downloadUrl = URL.createObjectURL(blob);
-        
-        const tempLink = document.createElement("a");
-        tempLink.href = downloadUrl;
-        tempLink.download = "index.html";
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        document.body.removeChild(tempLink);
-        URL.revokeObjectURL(downloadUrl);
-        
-        showToast("Fail index.html sedang dimuat turun ke komputer/telefon anda!", "success");
-      } catch (err) {
-        showToast("Ralat memuat turun fail: " + err.message, "delete");
-      }
-    }
-
-    // =========================================================
-    // SUPABASE CLOUD SYNC OPERATIONS
-    // =========================================================
     async function fetchBookingsFromSupabase() {
       try {
-        if (!supabaseClient) {
-          console.warn("Supabase SDK belum sedia, memuatkan data sandaran tempatan.");
-          bookings = JSON.parse(localStorage.getItem("wedding_bookings_local_v3")) || {};
-          renderCalendar();
-          renderAdminTable();
-          updateAdminCounts();
-          return;
-        }
-
         const { data, error } = await supabaseClient.from('bookings').select('*');
         if (error) {
-          console.warn("Nota: Jadual Supabase belum dicipta atau ralat:", error.message);
-          bookings = JSON.parse(localStorage.getItem("wedding_bookings_local_v3")) || {};
+          console.error("Ralat Supabase:", error);
+          bookings = JSON.parse(localStorage.getItem("wedding_bookings_local")) || {};
         } else if (data) {
           bookings = {};
           data.forEach(item => {
@@ -568,9 +458,6 @@
       }
     }
 
-    // =========================================================
-    // KALENDAR ENGINE
-    // =========================================================
     function renderCalendar() {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
@@ -584,7 +471,6 @@
       const calendarGrid = document.getElementById("calendarGrid");
       calendarGrid.innerHTML = "";
 
-      // Hari bulan lepas (padding kelabu)
       for (let x = firstDayIndex; x > 0; x--) {
         const prevDay = prevLastDayDate - x + 1;
         const cell = document.createElement("div");
@@ -593,7 +479,6 @@
         calendarGrid.appendChild(cell);
       }
 
-      // Hari bulan semasa
       const today = new Date();
       for (let day = 1; day <= lastDayDate; day++) {
         const dateStr = formatDateKey(year, month + 1, day);
@@ -712,9 +597,6 @@
       }
     }
 
-    // =========================================================
-    // MODAL PELANGGAN (CUSTOMER VIEW)
-    // =========================================================
     function openCustomerModal(dateStr) {
       const booking = bookings[dateStr];
       const displayDate = formatMalayDateDisplay(dateStr);
@@ -732,13 +614,13 @@
 
         bodyEl.innerHTML = `
           <div class="p-3.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 space-y-1">
-            <p class="font-bold flex items-center"><i class="fa-solid fa-circle-check mr-2 text-emerald-600"></i> Berita Baik!</p>
+            <p class="font-bold flex items-center"><i class="fa-solid fa-circle-check mr-2 text-emerald-600"></i> Slot Tersedia!</p>
             <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> masih kosong dan sedia untuk ditempah.</p>
           </div>
-          <p class="text-xs text-stone-500">Klik butang WhatsApp di bawah untuk terus bertanya pakej atau lock tarikh ini bersama kami.</p>
+          <p class="text-xs text-stone-500">Klik butang WhatsApp di bawah untuk terus bertanya pakej atau lock tarikh ini.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya ingin semak dan lock slot majlis perkahwinan pada tarikh ${displayDate}. Boleh saya dapatkan maklumat pakej & sebut harga?`);
+        const waText = encodeURIComponent(`Hai, saya ingin semak dan lock slot perkahwinan pada tarikh ${displayDate}. Boleh saya dapatkan sebut harga & pakej terkini?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
@@ -753,13 +635,13 @@
 
         bodyEl.innerHTML = `
           <div class="p-3.5 bg-stone-100 rounded-xl border border-stone-200 text-stone-700">
-            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> telah selesai bagi jadual terdahulu.</p>
+            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> telah selesai bagi jadual sebelum ini.</p>
           </div>
-          <p class="text-xs text-stone-500">Sila pilih tarikh lain yang masih berwarna hijau.</p>
+          <p class="text-xs text-stone-500">Sila semak tarikh lain yang masih bertanda hijau.</p>
         `;
 
         actionEl.innerHTML = `
-          <button onclick="closeCustomerModal()" class="w-full py-2.5 rounded-xl border border-stone-300 text-stone-700 font-semibold text-xs cursor-pointer">Pilih Tarikh Lain</button>
+          <button onclick="closeCustomerModal()" class="w-full py-2.5 rounded-xl border border-stone-300 text-stone-700 font-semibold text-xs">Pilih Tarikh Lain</button>
         `;
       } else if (booking.slot === "full") {
         badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800";
@@ -768,12 +650,12 @@
         bodyEl.innerHTML = `
           <div class="p-3.5 bg-rose-50 rounded-xl border border-rose-200 text-rose-900 space-y-1">
             <p class="font-bold flex items-center"><i class="fa-solid fa-calendar-xmark mr-2 text-rose-600"></i> Maaf, Slot Penuh</p>
-            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> telah disahkan ditempah oleh pelanggan lain.</p>
+            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> telah ditempah oleh pelanggan lain.</p>
           </div>
-          <p class="text-xs text-stone-500">Anda boleh berhubung di WhatsApp jika ingin dimasukkan ke dalam senarai menunggu (waiting list).</p>
+          <p class="text-xs text-stone-500">Anda boleh bertanya di WhatsApp jika ingin dimasukkan ke dalam waiting list sekiranya ada penukaran tarikh.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya nampak tarikh ${displayDate} sudah penuh. Boleh saya masukkan nama dalam senarai menunggu (waiting list)?`);
+        const waText = encodeURIComponent(`Hai, saya nampak tarikh ${displayDate} sudah penuh. Boleh saya masuk senarai menunggu (waiting list)?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
@@ -795,7 +677,7 @@
           <p class="text-xs text-stone-500">Hubungi kami segera sebelum slot ini diisi.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya lihat tarikh ${displayDate} masih ada slot bagi (${slotAvailableText}). Boleh saya buat tempahan?`);
+        const waText = encodeURIComponent(`Hai, saya lihat tarikh ${displayDate} masih ada slot kosong untuk (${slotAvailableText}). Boleh saya buat tempahan?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
@@ -813,9 +695,6 @@
       document.getElementById("customerDateModal").classList.add("hidden");
     }
 
-    // =========================================================
-    // MODAL ADMIN (ADD / EDIT / COMPLETE / DELETE)
-    // =========================================================
     function openAdminModal(dateStr) {
       const displayDate = formatMalayDateDisplay(dateStr);
       document.getElementById("adminModalDateHeader").innerText = displayDate;
@@ -852,7 +731,6 @@
       document.getElementById("adminBookingModal").classList.add("hidden");
     }
 
-    // SIMPAN REKOD TEMPAHAN
     async function saveBooking() {
       const dateKey = document.getElementById("bookingDateKey").value;
       const customerName = document.getElementById("custNameInput").value.trim();
@@ -864,7 +742,7 @@
       const notes = document.getElementById("notesInput").value.trim();
 
       if (!customerName) {
-        showToast("Sila masukkan nama pasangan / pelanggan.", "delete");
+        alert("Sila masukkan nama pelanggan/pengantin.");
         return;
       }
 
@@ -884,11 +762,12 @@
       };
 
       try {
-        if (supabaseClient) {
-          const { error } = await supabaseClient.from('bookings').upsert(bookingData);
-          if (error) {
-            console.warn("Supabase upsert:", error.message);
-          }
+        const { error } = await supabaseClient.from('bookings').upsert(bookingData);
+        if (error) {
+          alert("Gagal simpan ke Supabase: " + error.message);
+          saveBtn.disabled = false;
+          saveBtn.innerText = "Simpan Maklumat Tempahan";
+          return;
         }
 
         bookings[dateKey] = {
@@ -902,7 +781,7 @@
           notes
         };
 
-        localStorage.setItem("wedding_bookings_local_v3", JSON.stringify(bookings));
+        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
 
         saveBtn.disabled = false;
         saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Maklumat Tempahan`;
@@ -913,45 +792,40 @@
         updateAdminCounts();
         showToast(`Tempahan bagi tarikh ${formatMalayDateDisplay(dateKey)} berjaya disimpan!`, "success");
       } catch (err) {
+        alert("Ralat sambungan: " + err.message);
         saveBtn.disabled = false;
-        saveBtn.innerText = "Simpan Maklumat Tempahan";
-        showToast("Ralat sambungan: " + err.message, "delete");
       }
     }
 
-    // PADAM REKOD DENGAN PENGESAHAN (DELETE & RESET TO AVAILABLE)
-    function confirmDeleteCurrentBooking() {
+    async function deleteCurrentBooking() {
       const dateKey = document.getElementById("bookingDateKey").value;
       if (!bookings[dateKey]) return;
 
       const displayDate = formatMalayDateDisplay(dateKey);
       const pengantin = bookings[dateKey].customerName;
 
-      showConfirmDialog(
-        "Padam & Kosongkan Tarikh?",
-        `Adakah anda pasti ingin memadamkan tempahan "${pengantin}" pada ${displayDate}? Tarikh ini akan kembali berstatus TERSEDIA (Hijau) untuk pelanggan.`,
-        async () => {
-          try {
-            if (supabaseClient) {
-              await supabaseClient.from('bookings').delete().eq('date', dateKey);
-            }
-          } catch (e) {
-            console.error(e);
-          }
-
-          delete bookings[dateKey];
-          localStorage.setItem("wedding_bookings_local_v3", JSON.stringify(bookings));
-
-          closeAdminModal();
-          renderCalendar();
-          renderAdminTable();
-          updateAdminCounts();
-          showToast(`Tarikh ${displayDate} kini kembali TERSEDIA.`, "delete");
-        }
+      const confirmDel = confirm(
+        `Padamkan tempahan untuk "${pengantin}" pada ${displayDate}?\n\nTarikh ini akan kembali menjadi KOSONG (Available) untuk pelanggan.`
       );
+
+      if (confirmDel) {
+        const { error } = await supabaseClient.from('bookings').delete().eq('date', dateKey);
+        if (error) {
+          alert("Gagal memadam dari Supabase: " + error.message);
+          return;
+        }
+
+        delete bookings[dateKey];
+        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+
+        closeAdminModal();
+        renderCalendar();
+        renderAdminTable();
+        updateAdminCounts();
+        showToast(`Tarikh ${displayDate} kini kembali TERSEDIA.`, "delete");
+      }
     }
 
-    // TANDAKAN SELESAI / BELUM SELESAI
     async function toggleCurrentBookingCompleted() {
       const dateKey = document.getElementById("bookingDateKey").value;
       const booking = bookings[dateKey];
@@ -959,16 +833,14 @@
 
       const newStatus = (booking.status === "completed") ? "confirmed" : "completed";
 
-      try {
-        if (supabaseClient) {
-          await supabaseClient.from('bookings').update({ status: newStatus }).eq('date', dateKey);
-        }
-      } catch (e) {
-        console.error(e);
+      const { error } = await supabaseClient.from('bookings').update({ status: newStatus }).eq('date', dateKey);
+      if (error) {
+        alert("Ralat kemaskini: " + error.message);
+        return;
       }
 
       booking.status = newStatus;
-      localStorage.setItem("wedding_bookings_local_v3", JSON.stringify(bookings));
+      localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
 
       closeAdminModal();
       renderCalendar();
@@ -977,30 +849,20 @@
       showToast(newStatus === "completed" ? "Majlis telah ditandakan SELESAI!" : "Status diubah kepada Belum Selesai.", "info");
     }
 
-    function deleteBookingDirect(dateKey) {
+    async function deleteBookingDirect(dateKey) {
       const displayDate = formatMalayDateDisplay(dateKey);
       const booking = bookings[dateKey];
       if (!booking) return;
 
-      showConfirmDialog(
-        "Padam Rekod Tempahan?",
-        `Padam rekod ${booking.customerName} (${displayDate}) dan buka semula tarikh ini untuk pelanggan?`,
-        async () => {
-          try {
-            if (supabaseClient) {
-              await supabaseClient.from('bookings').delete().eq('date', dateKey);
-            }
-          } catch (e) {
-            console.error(e);
-          }
-          delete bookings[dateKey];
-          localStorage.setItem("wedding_bookings_local_v3", JSON.stringify(bookings));
-          renderCalendar();
-          renderAdminTable();
-          updateAdminCounts();
-          showToast(`Tarikh ${displayDate} telah dikosongkan semula.`, "delete");
-        }
-      );
+      if (confirm(`Padam rekod ${booking.customerName} (${displayDate}) dan buka semula tarikh ini?`)) {
+        await supabaseClient.from('bookings').delete().eq('date', dateKey);
+        delete bookings[dateKey];
+        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+        renderCalendar();
+        renderAdminTable();
+        updateAdminCounts();
+        showToast(`Tarikh ${displayDate} telah dikosongkan semula.`, "delete");
+      }
     }
 
     async function toggleCompleteDirect(dateKey) {
@@ -1008,24 +870,15 @@
       if (!booking) return;
 
       const newStatus = (booking.status === "completed") ? "confirmed" : "completed";
-      try {
-        if (supabaseClient) {
-          await supabaseClient.from('bookings').update({ status: newStatus }).eq('date', dateKey);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+      await supabaseClient.from('bookings').update({ status: newStatus }).eq('date', dateKey);
       booking.status = newStatus;
-      localStorage.setItem("wedding_bookings_local_v3", JSON.stringify(bookings));
+      localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
       renderCalendar();
       renderAdminTable();
       updateAdminCounts();
-      showToast(`Status tempahan ${booking.customerName} telah dikemaskini.`, "info");
+      showToast(`Status ${booking.customerName} dikemaskini.`, "info");
     }
 
-    // =========================================================
-    // JADUAL PENGURUSAN ADMIN (TABLE)
-    // =========================================================
     function renderAdminTable() {
       const tbody = document.getElementById("adminTableBody");
       const emptyNotice = document.getElementById("emptyTableNotice");
@@ -1097,13 +950,13 @@
           <td class="py-3 px-4">
             <div class="flex items-center justify-center space-x-1.5">
               ${waBtn}
-              <button onclick="openAdminModal('${item.date}')" class="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition cursor-pointer" title="Edit Tempahan">
+              <button onclick="openAdminModal('${item.date}')" class="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition" title="Edit Tempahan">
                 <i class="fa-solid fa-pen-to-square text-xs"></i>
               </button>
-              <button onclick="toggleCompleteDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition cursor-pointer" title="Tukar Selesai">
+              <button onclick="toggleCompleteDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition" title="Tukar Selesai">
                 <i class="fa-solid fa-circle-check text-xs"></i>
               </button>
-              <button onclick="deleteBookingDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-rose-50 text-rose-600 transition cursor-pointer" title="Padam Rekod">
+              <button onclick="deleteBookingDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-rose-50 text-rose-600 transition" title="Padam Rekod">
                 <i class="fa-solid fa-trash-can text-xs"></i>
               </button>
             </div>
@@ -1119,9 +972,9 @@
       ['all', 'upcoming', 'completed'].forEach(st => {
         const btn = document.getElementById(`filterBtn-${st}`);
         if (st === status) {
-          btn.className = "px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm cursor-pointer";
+          btn.className = "px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm";
         } else {
-          btn.className = "px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900 cursor-pointer";
+          btn.className = "px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900";
         }
       });
       renderAdminTable();
@@ -1132,9 +985,6 @@
       document.getElementById("totalBookingsCount").innerText = count;
     }
 
-    // =========================================================
-    // MOD ADMIN & PIN SECURITY
-    // =========================================================
     function handleModeSwitch() {
       if (isAdminMode) {
         isAdminMode = false;
@@ -1178,9 +1028,6 @@
       document.getElementById("pinModal").classList.add("hidden");
     }
 
-    // =========================================================
-    // TETAPAN NOMBOR WHATSAPP VENDOR
-    // =========================================================
     function openSettingsModal() {
       document.getElementById("vendorPhoneInput").value = settings.vendorPhone || "601123456789";
       document.getElementById("settingsModal").classList.remove("hidden");
@@ -1193,35 +1040,13 @@
     function saveVendorPhone() {
       const phone = document.getElementById("vendorPhoneInput").value.trim().replace(/\D/g, '');
       if (!phone) {
-        showToast("Sila masukkan nombor telefon yang sah.", "delete");
+        alert("Sila masukkan nombor telefon yang sah.");
         return;
       }
       settings.vendorPhone = phone;
       localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(settings));
       closeSettingsModal();
       showToast("Nombor WhatsApp berjaya dikemas kini!", "success");
-    }
-
-    // =========================================================
-    // CUSTOM DIALOG & TOAST (NO ALERT/CONFIRM)
-    // =========================================================
-    let confirmCallback = null;
-    function showConfirmDialog(title, description, onConfirm) {
-      document.getElementById('confirmDialogTitle').textContent = title;
-      document.getElementById('confirmDialogText').textContent = description;
-      confirmCallback = onConfirm;
-
-      const modal = document.getElementById('confirmDialogModal');
-      modal.classList.remove('hidden');
-
-      document.getElementById('confirmOkBtn').onclick = () => {
-        modal.classList.add('hidden');
-        if (confirmCallback) confirmCallback();
-      };
-
-      document.getElementById('confirmCancelBtn').onclick = () => {
-        modal.classList.add('hidden');
-      };
     }
 
     function scrollToSection(id) {
