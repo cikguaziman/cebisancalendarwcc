@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistem Semakan & Jadual Tarikh Kahwin</title>
+  <title>WCC - Cebisan Lensa | Semakan Slot & Jadual Tarikh Kahwin</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Supabase Library -->
@@ -23,6 +23,21 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            maroon: {
+              50: '#fdf2f4',
+              100: '#fce7eb',
+              200: '#f9d2d9',
+              300: '#f3abb9',
+              400: '#ea758c',
+              500: '#dc4667',
+              600: '#c5284b',
+              700: '#9b1c37',
+              800: '#7a1429',
+              900: '#5e0f1e',
+              950: '#38060f',
+            }
           }
         }
       }
@@ -31,7 +46,7 @@
 
   <style>
     body {
-      background-color: #faf9f6;
+      background-color: #faf9f8;
       color: #1f2937;
     }
     .custom-scrollbar::-webkit-scrollbar {
@@ -39,27 +54,27 @@
       height: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
+      background: #e5e7eb;
       border-radius: 9999px;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-amber-100 selection:text-amber-900">
+<body class="min-h-screen flex flex-col font-sans selection:bg-maroon-100 selection:text-maroon-900">
 
   <!-- ================= TOP NAVIGATION ================= -->
-  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
       
-      <!-- Logo / Title -->
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-md shadow-amber-500/20">
-          <i class="fa-solid fa-camera-retro text-lg"></i>
+      <!-- Brand Logo & Name -->
+      <div class="flex items-center space-x-3.5">
+        <div class="h-11 w-11 sm:h-12 sm:w-12 bg-white rounded-xl border border-stone-200 p-1 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+          <img src="logocebisanlensa.webp" alt="WCC - Cebisan Lensa" class="h-full w-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-serif font-bold text-maroon-900 text-xs text-center leading-tight\'>Cebisan<br>Lensa.</span>';" />
         </div>
         <div>
-          <h1 class="font-serif text-lg sm:text-xl font-bold tracking-tight text-stone-900 leading-tight">
-            Wedding Date Checker
+          <h1 class="font-serif text-lg sm:text-xl font-bold tracking-tight text-maroon-950 leading-tight">
+            WCC - Cebisan Lensa
           </h1>
-          <p class="text-xs text-stone-500 font-medium">Semakan Slot & Tempahan Rasmi</p>
+          <p class="text-xs text-stone-500 font-medium italic">Abadikan setiap cebisan kenangan.</p>
         </div>
       </div>
 
@@ -70,7 +85,7 @@
           Mod Pelanggan
         </span>
 
-        <button id="toggleModeBtn" onclick="handleModeSwitch()" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all border shadow-sm bg-white text-stone-700 border-stone-300 hover:bg-stone-50">
+        <button id="toggleModeBtn" onclick="handleModeSwitch()" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all border shadow-sm bg-white text-stone-700 border-stone-300 hover:bg-stone-50 hover:border-maroon-300">
           <i class="fa-solid fa-lock text-stone-400"></i>
           <span id="toggleModeBtnText">Masuk Admin</span>
         </button>
@@ -82,34 +97,40 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
 
-    <!-- ADMIN BANNER (Hanya muncul jika sudah login Admin) -->
-    <div id="adminNoticeBar" class="hidden bg-gradient-to-r from-stone-900 via-stone-800 to-amber-950 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <!-- ADMIN BANNER (Hanya kelihatan bila Login Admin) -->
+    <div id="adminNoticeBar" class="hidden bg-gradient-to-r from-maroon-950 via-maroon-900 to-stone-900 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-maroon-700/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
-        <div class="p-2.5 bg-amber-500/20 text-amber-400 rounded-xl">
+        <div class="p-2.5 bg-white/10 text-rose-200 rounded-xl">
           <i class="fa-solid fa-user-shield text-xl"></i>
         </div>
         <div>
-          <h2 class="font-bold text-sm sm:text-base text-amber-200">Portal Pengurusan Admin Aktif</h2>
-          <p class="text-xs text-stone-300">Klik mana-mana tarikh di kalendar untuk tambah, kemaskini, padam, atau tandakan majlis selesai.</p>
+          <h2 class="font-bold text-sm sm:text-base text-white">Portal Pengurusan Admin Aktif</h2>
+          <p class="text-xs text-stone-300">Klik tarikh di kalendar untuk tambah, kemaskini, padam, atau tandakan majlis selesai.</p>
         </div>
       </div>
       <div class="flex items-center space-x-2 w-full sm:w-auto">
-        <button onclick="scrollToSection('adminTableSection')" class="flex-1 sm:flex-none text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-medium transition">
-          <i class="fa-solid fa-list-check mr-1.5"></i> Urus Jadual (<span id="totalBookingsCount">0</span>)
+        <button onclick="scrollToSection('adminTableSection')" class="flex-1 sm:flex-none text-xs bg-white text-maroon-950 hover:bg-stone-100 px-3.5 py-2 rounded-lg font-bold transition shadow-sm">
+          <i class="fa-solid fa-list-check mr-1.5 text-maroon-800"></i> Urus Jadual (<span id="totalBookingsCount">0</span>)
         </button>
       </div>
     </div>
 
-    <!-- CUSTOMER WELCOME BANNER -->
-    <div id="customerBanner" class="text-center max-w-2xl mx-auto space-y-2">
-      <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full uppercase tracking-wider">
-        Kalendar Ketersediaan Slot
-      </span>
-      <h2 class="font-serif text-2xl sm:text-4xl font-bold text-stone-900 tracking-tight">
-        Rancang Hari Bahagia Anda Bersama Kami
-      </h2>
-      <p class="text-stone-600 text-sm sm:text-base">
-        Sila semak tarikh majlis anda di bawah. Klik pada tarikh bertanda hijau untuk terus berhubung atau lock tarikh melalui WhatsApp.
+    <!-- CUSTOMER HERO / BANNER -->
+    <div id="customerBanner" class="text-center max-w-2xl mx-auto space-y-3 pt-2">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-1 bg-maroon-50 border border-maroon-200 text-maroon-900 text-xs font-semibold rounded-full uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-maroon-700"></span>
+        <span>Kalendar Ketersediaan Slot</span>
+      </div>
+
+      <div class="py-1">
+        <img src="logocebisanlensa.webp" alt="Cebisan Lensa" class="h-16 sm:h-20 mx-auto object-contain drop-shadow-sm mb-2" onerror="this.style.display='none'" />
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-maroon-950 tracking-tight">
+          Abadikan Setiap Cebisan Kenangan
+        </h2>
+      </div>
+
+      <p class="text-stone-600 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
+        Sila semak jadual tarikh majlis perkahwinan anda di bawah. Klik mana-mana tarikh bertanda hijau untuk terus berhubung dengan kami melalui WhatsApp.
       </p>
     </div>
 
@@ -120,56 +141,56 @@
         <span class="font-medium text-stone-700">Tersedia (Boleh Tempah)</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-rose-500 shadow-sm"></span>
+        <span class="w-3.5 h-3.5 rounded-md bg-maroon-800 shadow-sm"></span>
         <span class="font-medium text-stone-700">Penuh / Ditempah</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-amber-400 shadow-sm"></span>
+        <span class="w-3.5 h-3.5 rounded-md bg-amber-500 shadow-sm"></span>
         <span class="font-medium text-stone-700">Slot Pagi / Malam Sahaja</span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="w-3.5 h-3.5 rounded-md bg-blue-500 shadow-sm"></span>
+        <span class="w-3.5 h-3.5 rounded-md bg-stone-400 shadow-sm"></span>
         <span class="font-medium text-stone-700">Majlis Selesai</span>
       </div>
     </div>
 
-    <!-- ================= KALENDAR ================= -->
+    <!-- ================= KALENDAR CONTAINER ================= -->
     <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
       
       <!-- Calendar Header -->
-      <div class="p-4 sm:p-6 bg-stone-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="p-4 sm:p-6 bg-maroon-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-maroon-900">
         <div>
-          <h3 id="currentMonthYearText" class="font-serif text-xl sm:text-2xl font-bold text-amber-200 tracking-wide">
+          <h3 id="currentMonthYearText" class="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
             Bulan & Tahun
           </h3>
-          <p class="text-xs text-stone-400">Pilih tarikh untuk melihat status ketersediaan</p>
+          <p class="text-xs text-rose-200/80">Pilih tarikh untuk semak ketersediaan slot</p>
         </div>
 
         <div class="flex items-center space-x-2">
-          <button onclick="changeMonth(-1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition">
+          <button onclick="changeMonth(-1)" class="p-2.5 rounded-lg bg-maroon-900 hover:bg-maroon-800 text-white transition" title="Bulan Sebelumnya">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <button onclick="goToCurrentMonth()" class="px-3.5 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-semibold text-amber-300 transition">
+          <button onclick="goToCurrentMonth()" class="px-3.5 py-2 rounded-lg bg-maroon-900 hover:bg-maroon-800 text-xs font-semibold text-rose-100 transition border border-maroon-700/50">
             Hari Ini
           </button>
-          <button onclick="changeMonth(1)" class="p-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white transition">
+          <button onclick="changeMonth(1)" class="p-2.5 rounded-lg bg-maroon-900 hover:bg-maroon-800 text-white transition" title="Bulan Seterusnya">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
       </div>
 
-      <!-- Days Header -->
+      <!-- Days of Week Header -->
       <div class="grid grid-cols-7 border-b border-stone-200 bg-stone-50 text-center text-xs font-bold text-stone-600 py-3">
-        <div class="text-rose-600">Ahad</div>
+        <div class="text-maroon-700">Ahad</div>
         <div>Isnin</div>
         <div>Selasa</div>
         <div>Rabu</div>
         <div>Khamis</div>
         <div>Jumaat</div>
-        <div class="text-amber-700">Sabtu</div>
+        <div class="text-maroon-900">Sabtu</div>
       </div>
 
-      <!-- Grid Hari -->
+      <!-- Calendar Days Grid -->
       <div id="calendarGrid" class="grid grid-cols-7 gap-px bg-stone-200">
         <!-- Render melalui JavaScript -->
       </div>
@@ -179,18 +200,18 @@
     <section id="adminTableSection" class="hidden space-y-4 pt-4 border-t border-stone-200">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h3 class="font-serif text-xl font-bold text-stone-900">Senarai & Rekod Tempahan</h3>
-          <p class="text-xs text-stone-500">Urus tempahan pelanggan, padam tarikh yang tersilap, atau tandakan siap.</p>
+          <h3 class="font-serif text-xl font-bold text-maroon-950">Senarai & Rekod Tempahan</h3>
+          <p class="text-xs text-stone-500">Urus tempahan pelanggan, padam rekod yang tersilap, atau tandakan selesai.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
           <div class="relative">
-            <input type="text" id="searchInput" oninput="renderAdminTable()" placeholder="Cari nama / lokasi..." class="text-xs pl-8 pr-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 w-44 sm:w-56" />
+            <input type="text" id="searchInput" oninput="renderAdminTable()" placeholder="Cari nama / lokasi..." class="text-xs pl-8 pr-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-maroon-700 w-44 sm:w-56" />
             <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-stone-400 text-xs"></i>
           </div>
 
           <div class="inline-flex rounded-lg border border-stone-200 bg-stone-100 p-0.5 text-xs">
-            <button onclick="setFilterStatus('all')" id="filterBtn-all" class="px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm">Semua</button>
+            <button onclick="setFilterStatus('all')" id="filterBtn-all" class="px-2.5 py-1.5 rounded-md font-semibold bg-white text-maroon-950 shadow-sm">Semua</button>
             <button onclick="setFilterStatus('upcoming')" id="filterBtn-upcoming" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900">Akan Datang</button>
             <button onclick="setFilterStatus('completed')" id="filterBtn-completed" class="px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900">Selesai</button>
           </div>
@@ -225,34 +246,43 @@
 
   <!-- ================= FOOTER ================= -->
   <footer class="bg-white border-t border-stone-200 py-6 mt-12 text-center text-xs text-stone-500">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <p>© 2026 Wedding Date Management System. Sistem Pengurusan Kalendar Sistematik.</p>
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-maroon-900">WCC - Cebisan Lensa</span>
+        <span>•</span>
+        <span class="italic text-stone-500">Abadikan setiap cebisan kenangan.</span>
+      </div>
       <div class="flex items-center space-x-3 text-stone-400">
-        <button onclick="openSettingsModal()" class="hover:text-stone-800 transition"><i class="fa-solid fa-gear mr-1"></i> No. WhatsApp Anda</button>
+        <a href="https://wa.me/60174467698" target="_blank" class="hover:text-emerald-600 transition flex items-center space-x-1">
+          <i class="fa-brands fa-whatsapp text-emerald-600"></i>
+          <span>+60174467698</span>
+        </a>
+        <span>•</span>
+        <button onclick="openSettingsModal()" class="hover:text-maroon-900 transition"><i class="fa-solid fa-gear mr-1"></i> Tetapan No. Tel</button>
       </div>
     </div>
   </footer>
 
   <!-- ================= MODALS ================= -->
 
-  <!-- 1. MODAL PIN LOGIN -->
+  <!-- 1. MODAL PIN LOGIN ADMIN -->
   <div id="pinModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
-        <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
+        <div class="w-12 h-12 bg-maroon-50 text-maroon-800 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
           <i class="fa-solid fa-key"></i>
         </div>
         <h3 class="font-serif text-lg font-bold text-stone-900">Akses Portal Admin</h3>
-        <p class="text-xs text-stone-500">Masukkan PIN keselamatan (Lalai: <b class="text-amber-700">1234</b>)</p>
+        <p class="text-xs text-stone-500">Masukkan PIN keselamatan anda (Lalai: <b class="text-maroon-800">1234</b>)</p>
       </div>
       
       <div class="space-y-3">
-        <input type="password" id="adminPinInput" maxlength="8" placeholder="Masukkan PIN" class="w-full text-center tracking-widest text-lg font-bold py-2.5 px-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+        <input type="password" id="adminPinInput" maxlength="8" placeholder="Masukkan PIN" class="w-full text-center tracking-widest text-lg font-bold py-2.5 px-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-maroon-700 focus:outline-none" />
         <p id="pinErrorMsg" class="hidden text-xs text-rose-600 text-center font-medium">PIN tidak sah! Sila cuba lagi.</p>
         
         <div class="grid grid-cols-2 gap-2 pt-1">
           <button onclick="closePinModal()" class="py-2 px-3 rounded-lg border border-stone-300 text-xs font-semibold text-stone-600 hover:bg-stone-50">Batal</button>
-          <button onclick="verifyPin()" class="py-2 px-3 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800">Sahkan</button>
+          <button onclick="verifyPin()" class="py-2 px-3 rounded-lg bg-maroon-900 text-white text-xs font-semibold hover:bg-maroon-950">Sahkan</button>
         </div>
       </div>
     </div>
@@ -282,7 +312,7 @@
       
       <div class="flex items-start justify-between pb-3 border-b border-stone-100">
         <div>
-          <span class="text-xs uppercase tracking-wider text-amber-700 font-bold">Urus Slot Kalendar</span>
+          <span class="text-xs uppercase tracking-wider text-maroon-800 font-bold">Urus Jadual Slot</span>
           <h3 id="adminModalDateHeader" class="font-serif text-xl font-bold text-stone-900">Tarikh</h3>
         </div>
         <button onclick="closeAdminModal()" class="text-stone-400 hover:text-stone-700 p-1">
@@ -296,18 +326,18 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-stone-700 mb-1">Nama Pasangan / Pelanggan *</label>
-            <input type="text" id="custNameInput" required placeholder="Cth: Alia & Aiman" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs" />
+            <input type="text" id="custNameInput" required placeholder="Cth: Alia & Aiman" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs" />
           </div>
           <div>
             <label class="block font-semibold text-stone-700 mb-1">No. WhatsApp Pelanggan</label>
-            <input type="tel" id="custPhoneInput" placeholder="Cth: 0123456789" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs" />
+            <input type="tel" id="custPhoneInput" placeholder="Cth: 0123456789" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-stone-700 mb-1">Status Ketersediaan Slot *</label>
-            <select id="slotTypeSelect" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs bg-white">
+            <select id="slotTypeSelect" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs bg-white">
               <option value="full">Penuh Sepanjang Hari (Booked)</option>
               <option value="morning">Slot Pagi Sahaja (Malam Kosong)</option>
               <option value="evening">Slot Malam Sahaja (Pagi Kosong)</option>
@@ -315,7 +345,7 @@
           </div>
           <div>
             <label class="block font-semibold text-stone-700 mb-1">Peringkat Tempahan *</label>
-            <select id="bookingStatusSelect" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs bg-white">
+            <select id="bookingStatusSelect" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs bg-white">
               <option value="confirmed">Disahkan (Confirmed)</option>
               <option value="deposit">Deposit Telah Dibayar</option>
               <option value="completed">Majlis Selesai (Completed)</option>
@@ -326,41 +356,37 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-stone-700 mb-1">Pakej Dipilih</label>
-            <input type="text" id="packageInput" placeholder="Cth: Pakej Sanding Video + Drone" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs" />
+            <input type="text" id="packageInput" placeholder="Cth: Pakej Sanding Video + Drone" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs" />
           </div>
           <div>
             <label class="block font-semibold text-stone-700 mb-1">Lokasi Majlis</label>
-            <input type="text" id="locationInput" placeholder="Cth: Dewan Bangi Convention" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs" />
+            <input type="text" id="locationInput" placeholder="Cth: Dewan Bangi Convention" class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs" />
           </div>
         </div>
 
         <div>
           <label class="block font-semibold text-stone-700 mb-1">Nota Khas / Baki Bayaran</label>
-          <textarea id="notesInput" rows="2" placeholder="Cth: Baki RM800 diselesaikan sebelum majlis." class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-amber-500 focus:outline-none text-xs"></textarea>
+          <textarea id="notesInput" rows="2" placeholder="Cth: Baki RM800 diselesaikan sebelum majlis." class="w-full px-3 py-2 rounded-lg border border-stone-300 focus:ring-2 focus:ring-maroon-700 focus:outline-none text-xs"></textarea>
         </div>
 
-        <!-- ACTION BUTTONS: SIMPAN / SELESAI / PADAM -->
+        <!-- ACTION BUTTONS -->
         <div class="pt-3 border-t border-stone-200 flex flex-col gap-2">
           
-          <button type="submit" id="btnSaveBooking" class="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2">
+          <button type="submit" id="btnSaveBooking" class="w-full py-2.5 px-4 rounded-xl bg-maroon-800 hover:bg-maroon-900 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2">
             <i class="fa-solid fa-floppy-disk"></i>
             <span>Simpan Maklumat Tempahan</span>
           </button>
 
-          <!-- Group butang khas jika tarikh sudah bertanda -->
           <div id="adminExistingActionGroup" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-            
-            <button type="button" onclick="toggleCurrentBookingCompleted()" id="btnToggleCompleted" class="w-full py-2 px-3 rounded-lg border border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5">
+            <button type="button" onclick="toggleCurrentBookingCompleted()" id="btnToggleCompleted" class="w-full py-2 px-3 rounded-lg border border-stone-300 text-stone-700 bg-stone-50 hover:bg-stone-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-circle-check"></i>
               <span id="btnToggleCompletedText">Tandakan Selesai</span>
             </button>
 
-            <!-- BUTANG PADAM / RESET TARIKH -->
             <button type="button" onclick="deleteCurrentBooking()" class="w-full py-2 px-3 rounded-lg border border-rose-300 text-rose-700 bg-rose-50 hover:bg-rose-100 font-semibold text-xs transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-trash-can"></i>
-              <span>Padam / Kosongkan Tarikh</span>
+              <span>Padam / Buka Tarikh</span>
             </button>
-
           </div>
 
           <button type="button" onclick="closeAdminModal()" class="w-full py-2 text-stone-500 hover:text-stone-800 text-xs font-medium">
@@ -371,22 +397,22 @@
     </div>
   </div>
 
-  <!-- 4. MODAL SETTINGS WHATSAPP -->
+  <!-- 4. MODAL SETTINGS NO TEL -->
   <div id="settingsModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
         <h3 class="font-serif text-lg font-bold text-stone-900">Tetapan Nombor WhatsApp</h3>
-        <p class="text-xs text-stone-500">Nombor telefon anda untuk menerima mesej pertanyaan pelanggan.</p>
+        <p class="text-xs text-stone-500">Nombor telefon rasmi untuk menerima mesej pertanyaan pelanggan.</p>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="block font-semibold text-stone-700 mb-1">Nombor Telefon (Cth: 60123456789)</label>
-          <input type="text" id="vendorPhoneInput" placeholder="Cth: 60123456789" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500" />
+          <label class="block font-semibold text-stone-700 mb-1">Nombor Telefon (Termasuk kod 60)</label>
+          <input type="text" id="vendorPhoneInput" placeholder="Cth: 60174467698" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-maroon-700" />
         </div>
         <div class="grid grid-cols-2 gap-2 pt-2">
           <button onclick="closeSettingsModal()" class="py-2 rounded-lg border border-stone-300 text-stone-600 font-medium">Batal</button>
-          <button onclick="saveVendorPhone()" class="py-2 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-700">Simpan</button>
+          <button onclick="saveVendorPhone()" class="py-2 rounded-lg bg-maroon-800 text-white font-semibold hover:bg-maroon-900">Simpan</button>
         </div>
       </div>
     </div>
@@ -406,9 +432,8 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoenpwYXRpYmt3cGJsdWNqcXhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0MTA3MjgsImV4cCI6MjEwNzk4NjcyOH0.KpPGtnFgqDMkJLr7uJHY1lfrE2oVR6y5eLYOL1d67-s";
 
     const DEFAULT_PIN = "1234";
-    const STORAGE_KEY_SETTINGS = "wedding_vendor_settings_v2";
+    const STORAGE_KEY_SETTINGS = "wcc_vendor_settings_v1";
 
-    // Inisialisasi Supabase Client
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let currentDate = new Date();
@@ -416,7 +441,7 @@
     let filterStatus = 'all';
     let bookings = {};
     let settings = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS)) || {
-      vendorPhone: "601123456789"
+      vendorPhone: "60174467698"
     };
 
     const malayMonths = [
@@ -434,7 +459,7 @@
         const { data, error } = await supabaseClient.from('bookings').select('*');
         if (error) {
           console.error("Ralat Supabase:", error);
-          bookings = JSON.parse(localStorage.getItem("wedding_bookings_local")) || {};
+          bookings = JSON.parse(localStorage.getItem("wcc_bookings_local")) || {};
         } else if (data) {
           bookings = {};
           data.forEach(item => {
@@ -487,7 +512,7 @@
 
         const cell = document.createElement("div");
         cell.className = `min-h-[90px] sm:min-h-[110px] p-1.5 sm:p-2.5 transition relative cursor-pointer group flex flex-col justify-between ${
-          isToday ? "bg-amber-50/40 border-2 border-amber-400" : "bg-white hover:bg-stone-50"
+          isToday ? "bg-maroon-50/50 border-2 border-maroon-700" : "bg-white hover:bg-stone-50"
         }`;
         cell.onclick = () => handleDateClick(dateStr);
 
@@ -506,7 +531,7 @@
         } else if (booking.status === "completed") {
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-blue-800">
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-stone-100 text-stone-600">
                 <i class="fa-solid fa-check text-[9px] mr-1"></i>
                 <span class="truncate">Selesai</span>
               </span>
@@ -515,8 +540,8 @@
         } else if (booking.slot === "full") {
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-600 mr-1"></span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-maroon-100 text-maroon-900 border border-maroon-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-maroon-800 mr-1"></span>
                 <span class="truncate">Penuh</span>
               </span>
             </div>
@@ -524,7 +549,7 @@
         } else if (booking.slot === "morning") {
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-900 leading-tight">
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-950 leading-tight">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1 shrink-0"></span>
                 <span class="truncate">Malam Kosong</span>
               </span>
@@ -533,7 +558,7 @@
         } else if (booking.slot === "evening") {
           statusBadgeHtml = `
             <div class="mt-1">
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-900 leading-tight">
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-semibold bg-amber-100 text-amber-950 leading-tight">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1 shrink-0"></span>
                 <span class="truncate">Pagi Kosong</span>
               </span>
@@ -544,8 +569,8 @@
         let adminInfoHtml = "";
         if (booking && isAdminMode) {
           adminInfoHtml = `
-            <div class="mt-auto pt-1 text-[10px] text-stone-600 font-medium truncate">
-              <i class="fa-solid fa-user text-stone-400 text-[8px] mr-0.5"></i> ${escapeHtml(booking.customerName)}
+            <div class="mt-auto pt-1 text-[10px] text-maroon-900 font-semibold truncate">
+              <i class="fa-solid fa-user text-maroon-700 text-[8px] mr-0.5"></i> ${escapeHtml(booking.customerName)}
             </div>
           `;
         }
@@ -553,8 +578,8 @@
         cell.innerHTML = `
           <div>
             <div class="flex items-center justify-between">
-              <span class="text-xs sm:text-sm font-bold ${isToday ? 'text-amber-800' : 'text-stone-800'}">${day}</span>
-              ${isAdminMode && booking ? '<i class="fa-solid fa-pen-to-square text-[10px] text-stone-400 group-hover:text-amber-600"></i>' : ''}
+              <span class="text-xs sm:text-sm font-bold ${isToday ? 'text-maroon-900' : 'text-stone-800'}">${day}</span>
+              ${isAdminMode && booking ? '<i class="fa-solid fa-pen-to-square text-[10px] text-stone-400 group-hover:text-maroon-800"></i>' : ''}
             </div>
             ${statusBadgeHtml}
           </div>
@@ -615,12 +640,12 @@
         bodyEl.innerHTML = `
           <div class="p-3.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 space-y-1">
             <p class="font-bold flex items-center"><i class="fa-solid fa-circle-check mr-2 text-emerald-600"></i> Slot Tersedia!</p>
-            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> masih kosong dan sedia untuk ditempah.</p>
+            <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> masih kosong dan sedia untuk ditempah bersama <b>WCC - Cebisan Lensa</b>.</p>
           </div>
           <p class="text-xs text-stone-500">Klik butang WhatsApp di bawah untuk terus bertanya pakej atau lock tarikh ini.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya ingin semak dan lock slot perkahwinan pada tarikh ${displayDate}. Boleh saya dapatkan sebut harga & pakej terkini?`);
+        const waText = encodeURIComponent(`Hai WCC - Cebisan Lensa, saya ingin semak dan lock slot majlis perkahwinan pada tarikh ${displayDate}. Boleh saya dapatkan sebut harga & pakej terkini?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
@@ -630,7 +655,7 @@
           </a>
         `;
       } else if (booking.status === "completed") {
-        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800";
+        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-stone-100 text-stone-600";
         badgeEl.innerText = "Majlis Selesai";
 
         bodyEl.innerHTML = `
@@ -641,21 +666,21 @@
         `;
 
         actionEl.innerHTML = `
-          <button onclick="closeCustomerModal()" class="w-full py-2.5 rounded-xl border border-stone-300 text-stone-700 font-semibold text-xs">Pilih Tarikh Lain</button>
+          <button onclick="closeCustomerModal()" class="w-full py-2.5 rounded-xl border border-stone-300 text-stone-700 font-semibold text-xs hover:bg-stone-50">Pilih Tarikh Lain</button>
         `;
       } else if (booking.slot === "full") {
-        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800";
+        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-maroon-100 text-maroon-900 border border-maroon-200";
         badgeEl.innerText = "Penuh / Telah Ditempah";
 
         bodyEl.innerHTML = `
-          <div class="p-3.5 bg-rose-50 rounded-xl border border-rose-200 text-rose-900 space-y-1">
-            <p class="font-bold flex items-center"><i class="fa-solid fa-calendar-xmark mr-2 text-rose-600"></i> Maaf, Slot Penuh</p>
+          <div class="p-3.5 bg-rose-50 rounded-xl border border-rose-200 text-maroon-950 space-y-1">
+            <p class="font-bold flex items-center text-maroon-900"><i class="fa-solid fa-calendar-xmark mr-2 text-maroon-700"></i> Maaf, Slot Penuh</p>
             <p class="text-xs sm:text-sm">Tarikh <b>${displayDate}</b> telah ditempah oleh pelanggan lain.</p>
           </div>
-          <p class="text-xs text-stone-500">Anda boleh bertanya di WhatsApp jika ingin dimasukkan ke dalam waiting list sekiranya ada penukaran tarikh.</p>
+          <p class="text-xs text-stone-500">Anda boleh berhubung di WhatsApp jika ingin dimasukkan ke dalam waiting list sekiranya ada perubahan jadual.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya nampak tarikh ${displayDate} sudah penuh. Boleh saya masuk senarai menunggu (waiting list)?`);
+        const waText = encodeURIComponent(`Hai WCC - Cebisan Lensa, saya nampak tarikh ${displayDate} sudah penuh. Boleh saya masuk senarai menunggu (waiting list)?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
@@ -666,7 +691,7 @@
         `;
       } else {
         const slotAvailableText = booking.slot === "morning" ? "Slot Malam (Resepsi/Sanding Malam)" : "Slot Pagi / Siang";
-        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900";
+        badgeEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-950";
         badgeEl.innerText = `Masih Ada: ${slotAvailableText}`;
 
         bodyEl.innerHTML = `
@@ -677,11 +702,11 @@
           <p class="text-xs text-stone-500">Hubungi kami segera sebelum slot ini diisi.</p>
         `;
 
-        const waText = encodeURIComponent(`Hai, saya lihat tarikh ${displayDate} masih ada slot kosong untuk (${slotAvailableText}). Boleh saya buat tempahan?`);
+        const waText = encodeURIComponent(`Hai WCC - Cebisan Lensa, saya lihat tarikh ${displayDate} masih ada slot kosong untuk (${slotAvailableText}). Boleh saya buat tempahan?`);
         const waLink = `https://wa.me/${settings.vendorPhone}?text=${waText}`;
 
         actionEl.innerHTML = `
-          <a href="${waLink}" target="_blank" class="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2">
+          <a href="${waLink}" target="_blank" class="w-full py-3 px-4 rounded-xl bg-maroon-800 hover:bg-maroon-900 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center justify-center space-x-2">
             <i class="fa-brands fa-whatsapp text-lg"></i>
             <span>Tempah ${slotAvailableText} di WhatsApp</span>
           </a>
@@ -781,7 +806,7 @@
           notes
         };
 
-        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+        localStorage.setItem("wcc_bookings_local", JSON.stringify(bookings));
 
         saveBtn.disabled = false;
         saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Maklumat Tempahan`;
@@ -816,7 +841,7 @@
         }
 
         delete bookings[dateKey];
-        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+        localStorage.setItem("wcc_bookings_local", JSON.stringify(bookings));
 
         closeAdminModal();
         renderCalendar();
@@ -840,7 +865,7 @@
       }
 
       booking.status = newStatus;
-      localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+      localStorage.setItem("wcc_bookings_local", JSON.stringify(bookings));
 
       closeAdminModal();
       renderCalendar();
@@ -857,7 +882,7 @@
       if (confirm(`Padam rekod ${booking.customerName} (${displayDate}) dan buka semula tarikh ini?`)) {
         await supabaseClient.from('bookings').delete().eq('date', dateKey);
         delete bookings[dateKey];
-        localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+        localStorage.setItem("wcc_bookings_local", JSON.stringify(bookings));
         renderCalendar();
         renderAdminTable();
         updateAdminCounts();
@@ -872,7 +897,7 @@
       const newStatus = (booking.status === "completed") ? "confirmed" : "completed";
       await supabaseClient.from('bookings').update({ status: newStatus }).eq('date', dateKey);
       booking.status = newStatus;
-      localStorage.setItem("wedding_bookings_local", JSON.stringify(bookings));
+      localStorage.setItem("wcc_bookings_local", JSON.stringify(bookings));
       renderCalendar();
       renderAdminTable();
       updateAdminCounts();
@@ -915,11 +940,11 @@
 
         let statusBadge = "";
         if (item.status === "completed") {
-          statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800"><i class="fa-solid fa-check mr-1 text-[10px]"></i> Selesai</span>`;
+          statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-stone-100 text-stone-700"><i class="fa-solid fa-check mr-1 text-[10px]"></i> Selesai</span>`;
         } else if (item.status === "deposit") {
           statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Deposit Paid</span>`;
         } else {
-          statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">Confirmed</span>`;
+          statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-maroon-100 text-maroon-900 border border-maroon-200">Confirmed</span>`;
         }
 
         let slotDesc = "Sepanjang Hari";
@@ -953,7 +978,7 @@
               <button onclick="openAdminModal('${item.date}')" class="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition" title="Edit Tempahan">
                 <i class="fa-solid fa-pen-to-square text-xs"></i>
               </button>
-              <button onclick="toggleCompleteDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition" title="Tukar Selesai">
+              <button onclick="toggleCompleteDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition" title="Tukar Selesai">
                 <i class="fa-solid fa-circle-check text-xs"></i>
               </button>
               <button onclick="deleteBookingDirect('${item.date}')" class="p-1.5 rounded-md hover:bg-rose-50 text-rose-600 transition" title="Padam Rekod">
@@ -972,7 +997,7 @@
       ['all', 'upcoming', 'completed'].forEach(st => {
         const btn = document.getElementById(`filterBtn-${st}`);
         if (st === status) {
-          btn.className = "px-2.5 py-1.5 rounded-md font-semibold bg-white text-stone-900 shadow-sm";
+          btn.className = "px-2.5 py-1.5 rounded-md font-semibold bg-white text-maroon-950 shadow-sm";
         } else {
           btn.className = "px-2.5 py-1.5 rounded-md font-medium text-stone-600 hover:text-stone-900";
         }
@@ -1009,8 +1034,8 @@
       if (inputPin === DEFAULT_PIN) {
         isAdminMode = true;
         closePinModal();
-        document.getElementById("modeBadge").className = "hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300";
-        document.getElementById("modeBadge").innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-600 mr-1.5"></span> Portal Admin`;
+        document.getElementById("modeBadge").className = "hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-maroon-100 text-maroon-900 border border-maroon-300";
+        document.getElementById("modeBadge").innerHTML = `<span class="w-2 h-2 rounded-full bg-maroon-700 mr-1.5"></span> Portal Admin`;
         document.getElementById("toggleModeBtnText").innerText = "Keluar Admin";
         document.getElementById("adminNoticeBar").classList.remove("hidden");
         document.getElementById("adminTableSection").classList.remove("hidden");
@@ -1029,7 +1054,7 @@
     }
 
     function openSettingsModal() {
-      document.getElementById("vendorPhoneInput").value = settings.vendorPhone || "601123456789";
+      document.getElementById("vendorPhoneInput").value = settings.vendorPhone || "60174467698";
       document.getElementById("settingsModal").classList.remove("hidden");
     }
 
