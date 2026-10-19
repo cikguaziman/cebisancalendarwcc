@@ -97,7 +97,7 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
 
-    <!-- ADMIN BANNER (Hanya kelihatan bila Login Admin) -->
+    <!-- ADMIN BANNER (Hanya muncul jika login Admin) -->
     <div id="adminNoticeBar" class="hidden bg-gradient-to-r from-maroon-950 via-maroon-900 to-stone-900 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-maroon-700/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
         <div class="p-2.5 bg-white/10 text-rose-200 rounded-xl">
@@ -190,7 +190,7 @@
         <div class="text-maroon-900">Sabtu</div>
       </div>
 
-      <!-- Calendar Days Grid -->
+      <!-- Grid Hari -->
       <div id="calendarGrid" class="grid grid-cols-7 gap-px bg-stone-200">
         <!-- Render melalui JavaScript -->
       </div>
@@ -265,7 +265,7 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- 1. MODAL PIN LOGIN ADMIN -->
+  <!-- 1. MODAL PIN LOGIN ADMIN (HINT DIPADAMKAN) -->
   <div id="pinModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-stone-100 space-y-4">
       <div class="text-center space-y-1">
@@ -273,7 +273,7 @@
           <i class="fa-solid fa-key"></i>
         </div>
         <h3 class="font-serif text-lg font-bold text-stone-900">Akses Portal Admin</h3>
-        <p class="text-xs text-stone-500">Masukkan PIN keselamatan anda (Lalai: <b class="text-maroon-800">1234</b>)</p>
+        <p class="text-xs text-stone-500">Sila masukkan PIN keselamatan pentadbir.</p>
       </div>
       
       <div class="space-y-3">
@@ -431,7 +431,8 @@
     const SUPABASE_URL = "https://bhzzpatibkwpblucjqxg.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoenpwYXRpYmt3cGJsdWNqcXhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0MTA3MjgsImV4cCI6MjEwNzk4NjcyOH0.KpPGtnFgqDMkJLr7uJHY1lfrE2oVR6y5eLYOL1d67-s";
 
-    const DEFAULT_PIN = "1234";
+    // PIN RASMI ADMIN
+    const DEFAULT_PIN = "030701";
     const STORAGE_KEY_SETTINGS = "wcc_vendor_settings_v1";
 
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
